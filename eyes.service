@@ -1,0 +1,27 @@
+# ########################################################################################
+# Systemd-type config file for starting the "eyes" script service 
+# 
+# The system kicks off the "blinkDriver" script, which calls blinkScript and pwmBlink
+# and then waits for those children to finish.  "blinkDriver" and "pwmBlink" each run in
+# an infinite loop.
+# "blinkShutdown" resets all the GPIO pins to 0 on service stop.
+#
+# Tom Sanidas
+# ########################################################################################
+[Unit]
+Description=Halloween Eyes
+After=network.target
+
+[Service]
+ExecStart=/home/pi/Development/eyescript/blinkDriver.sh ./eyes.conf
+WorkingDirectory=/home/pi/Development/eyescript
+StandardOutput=inherit
+ExecStop=/home/pi/Development/eyescript/blinkShutdown.sh ./eyes.conf
+#
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+
