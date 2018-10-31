@@ -21,6 +21,14 @@ gpio mode $GPIONUM out
 # Turn eyes off
 gpio write $GPIONUM 0
 
+# Blink off as eyes do
+function blink() {
+  # Blink once
+  gpio pwm $THISPWM 0
+  sleep .5
+  gpio pwm $THISPWM 1020
+}
+
 while [ true ]; do
   # Starting with eyes off to stop them from all being on for the first time
   gpio write $GPIONUM 0
@@ -36,6 +44,14 @@ while [ true ]; do
 
   gpio write $GPIONUM 1
   echo "[$GPIONUM]: Waiting for eyes to be turned off in $eyeson seconds"
+  halftime = $eyeson / 2
+  if [ $halftime -gt 3 ]; then
+    sleep $halftime
+    blink
+    sleep $halftime
+  else
+  	echo "[$GPIONUM]: Sleeping the full time"
+  fi
   sleep $eyeson
   gpio write $GPIONUM 0
 
