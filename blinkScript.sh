@@ -24,9 +24,9 @@ gpio write $GPIONUM 0
 # Blink off as eyes do
 function blink() {
   # Blink once
-  gpio pwm $THISPWM 0
+  gpio write $GPIONUM 0
   sleep .5
-  gpio pwm $THISPWM 1020
+  gpio write $GPIONUM 1
 }
 
 while [ true ]; do
@@ -41,20 +41,22 @@ while [ true ]; do
   ## Random number for eyes to be on
   eyeson=$RANDOM
   let "eyeson %= $EYES_ON_MAX"
-
+  if [ $eyeson -lt 3 ]; then
+    eyeson=3
+  fi
+  
   gpio write $GPIONUM 1
   echo "[$GPIONUM]: Waiting for eyes to be turned off in $eyeson seconds"
-  halftime = $eyeson / 2
-  if [ $halftime -gt 3 ]; then
+  halftime=`expr $eyesoff / 2`
+  if [ $halftime -gt 5 ]; then
     sleep $halftime
     blink
     sleep $halftime
   else
   	echo "[$GPIONUM]: Sleeping the full time"
+  	sleep $eyeson
   fi
-  sleep $eyeson
   gpio write $GPIONUM 0
-
 done
 
 # Ad infinitum
