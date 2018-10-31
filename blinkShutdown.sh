@@ -1,12 +1,10 @@
 #!/bin/bash
-#
+# ########################################################################################
 # blinkShutdown.sh
 #   When the service is stopped, sets all the ports to off
-#   Requires a config file in the format of:
-#   GPIONUMS="x y z"
+#   Requires the config file in the style of "eyes.conf"
 #
-# VERSION 1.0
-#
+# ########################################################################################
 if [ "$1" == "" ]; then
   echo "No GPIO ports file provided!  Exiting"
   exit 1

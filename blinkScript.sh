@@ -1,8 +1,10 @@
 #!/bin/bash
-#
+# ########################################################################################
 # Randomonly turns on then off a GPIO port to simulate blinking
-# 
-# VERSION 1.1
+# Arguments:
+#    - $1: The GPIO pin, in the "Wiring Pi'" numbering scheme: https://pinout.xyz/pinout/
+#          
+# ########################################################################################
 
 if [ "$1" == "" ]; then
   echo "No GPIO number provided!  Exiting"

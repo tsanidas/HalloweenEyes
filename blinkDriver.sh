@@ -1,12 +1,12 @@
 #!/bin/bash
-#
+# ########################################################################################
 # blinkDriver.sh
 #   Script to read list of GPIO ports and kick off a random blinking script for each one.
-#   Requires a config file in the format of:
-#   GPIONUMS="x y z"
+#   Requires a config file location passed in as the first argument.  See "eyes.conf" for
+#   a config file example and explanation of variables within the config file.
 #
-# VERSION 1.0
 #
+# ########################################################################################
 if [ "$1" == "" ]; then
   echo "No GPIO ports file provided!  Exiting"
   exit 1
