@@ -5,7 +5,7 @@
 #   Requires a config file location passed in as the first argument.  See "eyes.conf" for
 #   a config file example and explanation of variables within the config file.
 #
-#
+# Tom Sanidas
 # ########################################################################################
 if [ "$1" == "" ]; then
   echo "No GPIO ports file provided!  Exiting"

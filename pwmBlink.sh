@@ -1,9 +1,10 @@
 #!/bin/bash 
-
+# ########################################################################################
 # 
 # Gradually turn on off eyes, with random pause between to keep eyes open
 # ONLY works for PWM ports
 # 
+# ########################################################################################
 
 if [ "$1" == "" ]; then
   echo "Usage: $0 <pwm gpio number>"
@@ -18,8 +19,8 @@ EYES_OFF_MAX=55
 # Slowly open eyes
 function openEyes() {
   COUNTER=0
-  while [  $COUNTER -lt 1025 ]; do
-    let COUNTER=COUNTER+25
+  while [  $COUNTER -lt 1020 ]; do
+    let COUNTER=COUNTER+20
     sleep .2
     gpio pwm $THISPWM $COUNTER
   done
@@ -27,14 +28,22 @@ function openEyes() {
 
 # Slowly close eyes
 function closeEyes() {
-  COUNTER=1025
-  while [  $COUNTER -gt 25 ]; do
-    let COUNTER=COUNTER-25
+  COUNTER=1020
+  while [  $COUNTER -gt 20 ]; do
+    let COUNTER=COUNTER-20
     sleep .2
     gpio pwm $THISPWM $COUNTER
   done
   sleep 1
   gpio pwm $THISPWM 0
+}
+
+# Blink off as eyes do
+function blink() {
+  # Blink once
+  gpio pwm $THISPWM 0
+  sleep .5
+  gpio pwm $THISPWM 1020
 }
 
 # Set mode to pwm
@@ -54,6 +63,7 @@ while [ true ]; do
   let "eyeson %= $EYES_ON_MAX"
 
   openEyes
+  blink
   echo "[$THISPWM]/(PWM): Waiting for eyes to be turned off in $eyeson seconds"
   sleep $eyeson
 
